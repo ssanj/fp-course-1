@@ -117,10 +117,22 @@ constantParser =
 --
 -- >>> isErrorResult (parse character "")
 -- True
+-- data Parser a = P (Input -> ParseResult a)
+-- data ParseResult a =
+--    UnexpectedEof
+--  | ExpectedEof Input
+--  | UnexpectedChar Char
+--  | UnexpectedString Chars
+--  | Result Input a
+--  deriving Eq
 character ::
   Parser Char
 character =
-  error "todo: Course.Parser#character"
+  P $ \input ->
+    case input of
+      Nil -> UnexpectedEof
+      (x:.xs) ->  Result xs x
+
 
 -- | Parsers can map.
 -- Write a Functor instance for a @Parser@.
