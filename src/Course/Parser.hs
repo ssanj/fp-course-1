@@ -586,8 +586,8 @@ smokerParser = (const True) <$> is 'y' ||| (const False)  <$> is 'n'
 -- Result >a123-456< ""
 phoneBodyParser ::
   Parser Chars
-phoneBodyParser =
-  error "todo: Course.Parser#phoneBodyParser"
+phoneBodyParser = list (digit ||| is '-' ||| is '.')
+
 
 -- | Write a parser for Person.phone.
 --
