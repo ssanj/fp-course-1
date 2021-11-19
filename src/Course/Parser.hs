@@ -242,16 +242,6 @@ instance Applicative Parser where
   parserFAB <*> parserA =
     (\fab -> (\a -> valueParser $ fab a) =<< parserA) =<< parserFAB
 
-    -- P $ \input ->
-    --   let resultFAB = parse parserFAB input
-    --   in onResult resultFAB $
-    --       \remainingInput fab ->
-    --         let resultA = parse parserA remainingInput
-    --         in onResult resultA $
-    --           \remainingInput2 valueA ->
-    --             let valueB = fab valueA
-    --             in Result remainingInput2 valueB
-
 
 -- | Return a parser that produces a character but fails if
 --
@@ -269,8 +259,9 @@ instance Applicative Parser where
 satisfy ::
   (Char -> Bool)
   -> Parser Char
-satisfy =
-  error "todo: Course.Parser#satisfy"
+satisfy predicate =
+  (\c -> if predicate c then valueParser c else unexpectedCharParser c) =<< character
+
 
 -- | Return a parser that produces the given character but fails if
 --
