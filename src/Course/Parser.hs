@@ -239,8 +239,17 @@ instance Applicative Parser where
     Parser (a -> b)
     -> Parser a
     -> Parser b
-  (<*>) =
-    error "todo: Course.Parser (<*>)#instance Parser"
+  parserFAB <*> parserA =
+    P $ \input ->
+      let resultFAB = parse parserFAB input
+      in onResult resultFAB $
+          \remainingInput fab ->
+            let resultA = parse parserA remainingInput
+            in onResult resultA $
+              \remainingInput2 valueA ->
+                let valueB = fab valueA
+                in Result remainingInput2 valueB
+
 
 -- | Return a parser that produces a character but fails if
 --
