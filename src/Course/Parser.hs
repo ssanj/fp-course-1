@@ -400,8 +400,8 @@ list1 parser =  parser .:. (list parser)
 -- /Tip:/ Use the @list1@ and @space@ functions.
 spaces1 ::
   Parser Chars
-spaces1 =
-  error "todo: Course.Parser#spaces1"
+spaces1 = list1 space
+
 
 -- | Return a parser that produces a lower-case character but fails if
 --
@@ -412,8 +412,8 @@ spaces1 =
 -- /Tip:/ Use the @satisfy@ and @Data.Char#isLower@ functions.
 lower ::
   Parser Char
-lower =
-  error "todo: Course.Parser#lower"
+lower = satisfy Data.Char.isLower
+
 
 -- | Return a parser that produces an upper-case character but fails if
 --
