@@ -181,8 +181,12 @@ valueParser value = P (\input -> Result input value)
   Parser a
   -> Parser a
   -> Parser a
-(|||) =
-  error "todo: Course.Parser#(|||)"
+parser1 ||| parser2 =
+  P $ \input ->
+    let result1 = parse parser1 input
+    in case isErrorResult result1 of
+      True  -> parse parser2 input
+      False -> result1
 
 infixl 3 |||
 
