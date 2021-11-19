@@ -608,8 +608,12 @@ phoneBodyParser = list (digit ||| is '-' ||| is '.')
 -- True
 phoneParser ::
   Parser Chars
-phoneParser =
-  error "todo: Course.Parser#phoneParser"
+phoneParser = do
+  d <- digit
+  body <- phoneBodyParser
+  is '#'
+  return $ d :. body
+
 
 -- | Write a parser for Person.
 --
