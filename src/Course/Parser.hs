@@ -559,8 +559,13 @@ surnameParser = do
 -- True
 smokerParser ::
   Parser Bool
-smokerParser =
-  error "todo: Course.Parser#smokerParser"
+smokerParser = (const True) <$> is 'y' ||| (const False)  <$> is 'n'
+
+-- map on success instead of comparing values
+
+  -- let parserBool = is 'y' ||| is 'n'
+  -- in  (\b -> if b == 'y' then True else False) <$> parserBool
+
 
 -- | Write part of a parser for Person#phoneBody.
 -- This parser will only produce a string of digits, dots or hyphens.
