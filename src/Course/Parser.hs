@@ -338,8 +338,8 @@ space = satisfy Data.Char.isSpace
   Parser a
   -> Parser (List a)
   -> Parser (List a)
-(.:.) =
-  error "todo: Course.Parser#(.:.)"
+parserA .:. parserListA = lift2 (:.) parserA parserListA
+
 
 infixr 5 .:.
 
@@ -367,8 +367,8 @@ infixr 5 .:.
 list ::
   Parser a
   -> Parser (List a)
-list =
-  error "todo: Course.Parser#list"
+list parser = lift2 (:.) parser (list parser) ||| valueParser Nil
+
 
 -- | Return a parser that produces at least one value from the given parser then
 -- continues producing a list of values from the given parser (to ultimately produce a non-empty list).

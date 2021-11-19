@@ -123,15 +123,16 @@ instance Applicative ((->) t) where
   pure ::
     a
     -> ((->) t a)
-  pure =
-    error "todo: Course.Applicative pure#((->) t)"
+  pure = const
   (<*>) ::
     ((->) t (a -> b))
     -> ((->) t a)
     -> ((->) t b)
-  (<*>) =
-    error "todo: Course.Apply (<*>)#instance ((->) t)"
-
+  fab <*> fa =
+    \t ->
+      let f = fab t
+          a = fa t
+      in f a
 
 -- | Apply a binary function in the environment.
 --
@@ -158,8 +159,8 @@ lift2 ::
   -> k a
   -> k b
   -> k c
-lift2 =
-  error "todo: Course.Applicative#lift2"
+lift2 f fa fb = (\a -> f a) <$> fa <*> fb
+
 
 -- | Apply a ternary function in the environment.
 -- /can be written using `lift2` and `(<*>)`./
@@ -252,8 +253,7 @@ lift1 ::
   (a -> b)
   -> k a
   -> k b
-lift1 =
-  error "todo: Course.Applicative#lift1"
+lift1 f fa = f <$> fa
 
 -- | Apply, discarding the value of the first argument.
 -- Pronounced, right apply.
@@ -278,8 +278,7 @@ lift1 =
   k a
   -> k b
   -> k b
-(*>) =
-  error "todo: Course.Applicative#(*>)"
+(*>) fa fb = lift2 (flip const) fa fb
 
 -- | Apply, discarding the value of the second argument.
 -- Pronounced, left apply.
@@ -304,8 +303,8 @@ lift1 =
   k b
   -> k a
   -> k b
-(<*) =
-  error "todo: Course.Applicative#(<*)"
+(<*) = lift2 const
+
 
 -- | Sequences a list of structures to a structure of list.
 --
