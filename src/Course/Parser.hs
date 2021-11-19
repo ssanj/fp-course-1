@@ -513,7 +513,6 @@ firstNameParser ::
   Parser Chars
 firstNameParser = lift2 (:.) upper (list lower)
 
-
   -- do
   -- f <- upper
   -- r <- list lower
@@ -538,8 +537,11 @@ firstNameParser = lift2 (:.) upper (list lower)
 -- True
 surnameParser ::
   Parser Chars
-surnameParser =
-  error "todo: Course.Parser#surnameParser"
+surnameParser = do
+  f <- upper
+  l <- thisMany 5 lower
+  r <-list lower
+  return $ f :. l ++ r
 
 -- | Write a parser for Person.smoker.
 --
