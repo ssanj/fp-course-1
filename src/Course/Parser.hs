@@ -385,9 +385,10 @@ list parser = lift2 (:.) parser (list parser) ||| valueParser Nil
 -- True
 list1 ::
   Parser a
-  -> Parser (List a)
-list1 =
-  error "todo: Course.Parser#list1"
+  -> Parser (List a) -- Can we return a NonEmpty list from here?
+-- list1 parser =  lift2 (:.) parser (list parser)
+list1 parser =  parser .:. (list parser)
+
 
 -- | Return a parser that produces one or more space characters
 -- (consuming until the first non-space) but fails if
