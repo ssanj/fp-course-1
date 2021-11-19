@@ -272,8 +272,8 @@ satisfy predicate =
 -- /Tip:/ Use the @satisfy@ function.
 is ::
   Char -> Parser Char
-is =
-  error "todo: Course.Parser#is"
+is c = satisfy (c ==)
+
 
 -- | Return a parser that produces a character between '0' and '9' but fails if
 --
@@ -296,8 +296,8 @@ is =
 -- True
 digit ::
   Parser Char
-digit =
-  error "todo: Course.Parser#digit"
+digit = satisfy Data.Char.isDigit
+
 
 --
 -- | Return a parser that produces a space character but fails if
@@ -321,8 +321,8 @@ digit =
 -- True
 space ::
   Parser Char
-space =
-  error "todo: Course.Parser#space"
+space = satisfy Data.Char.isSpace
+
 
 -- | Return a parser that conses the result of the first parser onto the result of
 -- the second. Pronounced "cons parser".
