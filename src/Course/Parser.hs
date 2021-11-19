@@ -452,8 +452,16 @@ alpha = satisfy Data.Char.isAlpha
 sequenceParser ::
   List (Parser a)
   -> Parser (List a)
-sequenceParser =
-  error "todo: Course.Parser#sequenceParser"
+sequenceParser Nil = valueParser Nil
+sequenceParser (h :. t) = lift2 (:.) h (sequenceParser t)
+
+  -- do
+  -- f <- h
+  -- r <- sequenceParser t
+  -- return (f :. r)
+
+  -- (\p -> (\pl -> valueParser (p :. pl)) =<< sequenceParser t) =<< h
+
 
 -- | Return a parser that produces the given number of values off the given parser.
 -- This parser fails if the given parser fails in the attempt to produce the given number of values.
