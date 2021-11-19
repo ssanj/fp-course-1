@@ -671,7 +671,34 @@ phoneParser = do
 personParser ::
   Parser Person
 personParser =
-  error "todo: Course.Parser#personParser"
+  pure Person     <*>
+  ageParser       <*>~
+  firstNameParser <*>~
+  surnameParser   <*>~
+  smokerParser    <*>~
+  phoneParser
+
+  -- pure Person     <*>
+  -- ageParser       <* spaces1 <*>
+  -- firstNameParser <* spaces1 <*>
+  -- surnameParser   <* spaces1 <*>
+  -- smokerParser    <* spaces1 <*>
+  -- phoneParser
+
+  -- do
+  -- age    <- ageParser       <* spaces1
+  -- fname  <- firstNameParser <* spaces1
+  -- sname  <- surnameParser   <* spaces1
+  -- smoker <- smokerParser    <* spaces1
+  -- phone  <- phoneParser
+  -- return $ Person age fname sname smoker phone
+
+  -- Person
+  --   Int   -- age
+  --   Chars -- first name
+  --   Chars -- surname
+  --   Bool  -- smoker
+  --   Chars -- phone number
 
 -- Make sure all the tests pass!
 
