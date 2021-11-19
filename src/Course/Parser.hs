@@ -157,8 +157,8 @@ instance Functor Parser where
 valueParser ::
   a
   -> Parser a
-valueParser =
-  error "todo: Course.Parser#valueParser"
+valueParser value = P (\input -> Result input value)
+
 
 -- | Return a parser that tries the first parser for a successful value.
 --
